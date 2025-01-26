@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>To-Do List</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      plugins: [require('daisyui')],
+      daisyui: {
+        themes: ['light', 'dark'], 
+      },
+    };
+  </script>
+</head>
+
+<body class="bg-gray-100 dark:bg-gray-800 min-h-screen flex items-center justify-center">
+  <div class="container mx-auto max-w-lg p-4">
+    <div class="card bg-white dark:bg-gray-900 shadow-lg p-6 rounded-2xl">
+      <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">To-Do List</h1>
+      <form id="todo-form" class="flex items-center gap-2 mb-4">
+
+        <input
+          id="task-input"
+          type="text"
+          placeholder="Enter a task"
+          class="input input-bordered w-full"
+          required
+        />
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+      <ul id="todo-list" class="space-y-2"></ul>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('todo-form');
+    const taskInput = document.getElementById('task-input');
+    const todoList = document.getElementById('todo-list');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const taskText = taskInput.value.trim();
+      if (taskText) {
+        const li = document.createElement('li');
+        li.className = 'flex justify-between items-center bg-gray-200 dark:bg-gray-700 p-3 rounded-lg';
+        li.innerHTML = `
+          <span>${taskText}</span>
+          <button class="btn btn-error btn-sm">Delete</button>
+        `;
+        li.querySelector('button').addEventListener('click', () => li.remove());
+        todoList.appendChild(li);
+        taskInput.value = '';
+      }
+    });
+
+  </script>
+</body>
+</html>
